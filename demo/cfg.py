@@ -38,5 +38,9 @@ def capture(dm, name=None, x1=0, y1=0, x2=None, y2=None):
         y2 = dm.h
     return dm.Capture(x1, y1, x2, y2, name)
 
-def rect(x, y, w, h):
+def rect(x, y, w=20, h=20):
     return dict(x1=x, y1=y, x2=x+w, y2=y+h)
+
+def rect_center(x, y, w=20, h=20):
+    w2, h2 = w/2, h/2
+    return dict(x1=x-w2, y1=y-h2, x2=x+w2, y2=y+h2)

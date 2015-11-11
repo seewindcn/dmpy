@@ -106,6 +106,10 @@ class Damo(object):
         self.ver = self.dm.Ver()
         damo_log('dm(%s) loaded!' % self.ver)
 
+    @property
+    def isVer2(self):
+        return self.dm_ver[0] == 2
+
     def UnBindWindow(self):
         return self.dm.UnBindWindow()
 
@@ -135,8 +139,12 @@ class Damo(object):
                 )
         if rs == 1:
             atexit.register(self.UnBindWindow)
+            self.w, self.h = self.GetClientSize()
             return True
         return False
+
+    def GetWindowTitle(self):
+        return self.dm.GetWindowTitle(self.hwnd)
 
     def SetPath(self, path):
         self.dm.SetPath(path) == 1
@@ -144,11 +152,29 @@ class Damo(object):
     def SetMouseDelay(self, type, delay):
         self.dm.SetMouseDelay(type, delay)
 
+    def GetClientRect(self):
+        if self.isVer2:
+            x1, y1 = PINT(0), PINT(0)
+            x2, y2 = PINT(0), PINT(0)
+            rs = self.dm.GetClientRect(self.hwnd, x1, y1, x2, y2)
+            x1, y1, x2, y2 = P2V(x1), P2V(y1), P2V(x2), P2V(y2)
+        else:
+            x1, y1, x2, y2, rs = self.dm.GetClientRect(self.hwnd)
+
+        if rs:
+            return x1, y1, x2, y2
+        return 0, 0, 0, 0
+
     def GetClientSize(self):
-        w, h = PINT(0), PINT(0)
-        rs = self.dm.GetClientSize(self.hwnd, w, h)
-        if rs == 1:
-            return P2V(w), P2V(h)
+        if self.dm_ver == VER_2_1142:
+            w, h = PINT(0), PINT(0)
+            rs = self.dm.GetClientSize(self.hwnd, w, h)
+            w, h = P2V(w), P2V(h)
+        else:
+            w, h, rs = self.dm.GetClientSize(self.hwnd)
+
+        if rs:
+            return w, h
         return 0, 0
 
     def SetClientSize(self, w, h):

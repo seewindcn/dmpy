@@ -2,21 +2,31 @@
 # -*- coding:utf-8 -*-
 from cfg import *
 
+def test1(dm):
+    """
+    :type dm: Damo
+    """
+    print dm.GetWindowTitle()
+    print dm.GetClientSize()
+
+
 def eve_jump(dm):
     """
     :type dm: Damo
     """
-    #w, h = dm.GetClientSize()
-    w, h = 1024, 768
-    dm.SetClientSize(w, h)
+    # test1(dm); return
+
+    w, h = dm.w, dm.h
+    # w, h = 1024, 768
+    # dm.SetClientSize(w, h)
 
     sleep(1)
     dm.SetDict(0, get_res('eve.txt'))
     capture(dm)
-    capture(dm, name='capture1', **rect(812, 84, 20, 20))
+    capture(dm, name='capture1', **rect_center(822, 110))
 
     if 1:
-        dm.MoveAndClick(822, 94)
+        dm.MoveAndClick(822, 110)
         sleep(0.2)
         dm.LeftDoubleClick()
 
