@@ -146,6 +146,21 @@ class Damo(object):
     def GetWindowTitle(self):
         return self.dm.GetWindowTitle(self.hwnd)
 
+    def ClientToScreen(self, x, y):
+        x1, y1, rs = self.dm.ClientToScreen(self.hwnd, x, y)
+        if rs == 1:
+            return x1, y1
+        return 0, 0
+
+    def SetClipboard(self, str1):
+        return self.dm.SetClipboard(str1)
+
+    def GetClipboard(self):
+        return self.dm.GetClipboard()
+
+    def SendPaste(self):
+        return self.dm.SendPaste(self.hwnd)
+
     def SetPath(self, path):
         self.dm.SetPath(path) == 1
 

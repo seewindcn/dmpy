@@ -8,13 +8,14 @@ def test1(dm):
     """
     print dm.GetWindowTitle()
     print dm.GetClientSize()
+    print dm.ClientToScreen(1,1)
 
 
 def eve_jump(dm):
     """
     :type dm: Damo
     """
-    # test1(dm); return
+    test1(dm); return
 
     w, h = dm.w, dm.h
     # w, h = 1024, 768
